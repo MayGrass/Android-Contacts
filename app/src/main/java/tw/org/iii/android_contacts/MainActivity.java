@@ -10,10 +10,13 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,5 +90,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void test3(View view) {
+        Cursor cursor = contentResolver.query(CallLog.Calls.CONTENT_URI,
+                null, null, null, null);
+
+//        CallLog.Calls.NUMBER
+//        CallLog.Calls.TYPE => CallLog.Calls.INCOMING_TYPE; CallLog.Calls.OUTGOING_TYPE, CallLog.Calls.MISSED_TYPE;
+//        CallLog.Calls.DATE;
+//        CallLog.Calls.DURATION;
+        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int date = cursor.getColumnIndex(CallLog.Calls.DATE);
+
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(number);
+            long value = Long.parseLong(cursor.getString(date));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(value);
+            Log.v("DCH", name + ':' + calendar.get(Calendar.YEAR)+ "-" +(calendar.get(Calendar.MONTH)+1));
+        }
+
+    }
+
 
 }

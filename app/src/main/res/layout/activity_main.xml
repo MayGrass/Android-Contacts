@@ -20,5 +20,11 @@
         android:text="getSystemInfo"
         android:onClick="test2"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="來電紀錄"
+        android:onClick="test3"
+        />
 
 </LinearLayout>
