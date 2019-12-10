@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
@@ -68,5 +69,23 @@ public class MainActivity extends AppCompatActivity {
             String tel = cursor.getString(indexDatal);
             Log.v("DCH", name + ':' + tel);
         }
+
+        cursor.close();
     }
+
+    public void test2(View view) {
+        Cursor cursor = contentResolver.query(Settings.System.CONTENT_URI,
+                null, null, null, null);
+        int indexName = cursor.getColumnIndex("name");
+        int indexDatal = cursor.getColumnIndex("value");
+
+        //獲得系統資訊
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(indexName);
+            String value = cursor.getString(indexDatal);
+            Log.v("DCH", name + ':' + value);
+        }
+
+    }
+
 }
